@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ringo", "Ringo\Ringo.csproj", "{71FD1A86-C411-4D7E-8C57-86B83F481976}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ringo.Tests", "Ringo.Tests\Ringo.Tests.csproj", "{033D5CD8-95AE-4A9F-9699-AE89246B1548}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{837D1E68-D67D-4560-8FE4-1F47A77CB60D}"
+	ProjectSection(SolutionItems) = preProject
+		Kuda.vsmdi = Kuda.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Kuda.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71FD1A86-C411-4D7E-8C57-86B83F481976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71FD1A86-C411-4D7E-8C57-86B83F481976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71FD1A86-C411-4D7E-8C57-86B83F481976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71FD1A86-C411-4D7E-8C57-86B83F481976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{033D5CD8-95AE-4A9F-9699-AE89246B1548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{033D5CD8-95AE-4A9F-9699-AE89246B1548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{033D5CD8-95AE-4A9F-9699-AE89246B1548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{033D5CD8-95AE-4A9F-9699-AE89246B1548}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
