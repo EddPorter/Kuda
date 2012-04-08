@@ -7,14 +7,6 @@ namespace Ringo
 {
   public class PackageManager
   {
-    public void Add(IPackage package) {
-      if (package == null) {
-        throw new ArgumentNullException("package", "The package must be not " +
-          "be null.");
-      }
-
-      packages_.Add(package);
-    }
 
     private List<IPackage> packages_ = new List<IPackage>();
     public ReadOnlyCollection<IPackage> Items {
@@ -24,6 +16,20 @@ namespace Ringo
     }
 
     private List<IDependency> dependencies_ = new List<IDependency>();
+    public ReadOnlyCollection<IDependency> Dependencies {
+      get {
+        return dependencies_.AsReadOnly();
+      }
+    }
+
+    public void Add(IPackage package) {
+      if (package == null) {
+        throw new ArgumentNullException("package", "The package must be not " +
+          "be null.");
+      }
+
+      packages_.Add(package);
+    }
 
     public void SetDependency(string dependent_package, string parent_package) {
       var dependent = packages_.Find(p => p.Name == dependent_package);
@@ -39,11 +45,38 @@ namespace Ringo
           "parent package ({0}) was found.", parent_package), "parent_package");
       }
 
-      Depencency d = new Depencency(dependent, parent);
-      dependencies_.Add(d);
+      if (dependencies_.Any(
+                         d => d.Parent == parent && d.Dependent == dependent)) {
+        throw new ArgumentException(string.Format("Package {0} is already " +
+          "dependent on package {1}.", dependent_package, parent_package),
+          "dependent_package");
+      }
+
+      List<IPackage> to_explore = new List<IPackage>();
+      List<IPackage> explored = new List<IPackage>();
+      to_explore.Add(dependent);
+      while (to_explore.Count > 0) {
+        var exploring = to_explore[0];
+        if (exploring == parent) {
+          throw new ArgumentException("Adding this dependency would create a " +
+            "dependency cycle.", "dependent_package");
+        }
+        to_explore.Remove(exploring);
+        if (!explored.Contains(exploring)) {
+          explored.Add(exploring);
+          var existing_dependencies = dependencies_.
+                                       Where(d => d.Parent == exploring).
+                                       Select(d => d.Dependent);
+          to_explore.AddRange(existing_dependencies);
+        }
+      }
+
+      dependencies_.Add(new Depencency(dependent, parent));
     }
 
     public List<IPackage> Flatten() {
+      // This method assumes that the dependency list is acyclic.
+
       List<IPackage> output = new List<IPackage>();
 
       List<IPackage> packages_clone = new List<IPackage>(packages_);
