@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Ringo
 {
@@ -62,7 +61,7 @@ namespace Ringo
         // The dependency d is the top of its chain. Add the parent package if
         // it hasn't already been added.
         if (packages_clone.Contains(d.Parent)) {
-        output.Add(d.Parent);
+          output.Add(d.Parent);
           packages_clone.Remove(d.Parent);
           dependencies_clone.Remove(d);
         }

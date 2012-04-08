@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TechTalk.SpecFlow;
-using Ringo;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
+using TechTalk.SpecFlow;
 
 namespace Ringo.Tests
 {

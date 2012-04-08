@@ -1,8 +1,7 @@
-﻿using Ringo;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using Moq;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace Ringo.Tests
 {

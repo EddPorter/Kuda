@@ -1,6 +1,5 @@
-﻿using Ringo;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Ringo.Tests
 {

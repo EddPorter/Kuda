@@ -1,5 +1,4 @@
-﻿using System;
-namespace Ringo
+﻿namespace Ringo
 {
   public interface IDependency
   {
