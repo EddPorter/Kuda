@@ -20,7 +20,7 @@ namespace Ringo.Tests
     }
     [When(@"I output the flat list")]
     public void WhenIOutputTheFlatList() {
-      flat_list_ = packages_.Flatten();
+      flat_list_ = new List<IPackage>(packages_.Flatten());
     }
     [Then(@"""(.*)"" should appear before ""(.*)""")]
     public void ThenFirstPackageShouldAppearBeforeSecondPackage(string first_package, string second_package) {

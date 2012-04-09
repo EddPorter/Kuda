@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 
 namespace Ringo
@@ -34,22 +35,23 @@ namespace Ringo
     public void SetDependency(string dependent_package, string parent_package) {
       var dependent = packages_.Find(p => p.Name == dependent_package);
       if (dependent == null) {
-        throw new ArgumentException(string.Format("No package matching the " +
-          "dependent package ({0}) was found.", dependent_package),
-          "dependent_package");
+        throw new ArgumentException(string.Format(CultureInfo.CurrentCulture,
+          "No package matching the dependent package ({0}) was found.",
+          dependent_package), "dependent_package");
       }
 
       var parent = packages_.Find(p => p.Name == parent_package);
       if (parent == null) {
-        throw new ArgumentException(string.Format("No package matching the " +
-          "parent package ({0}) was found.", parent_package), "parent_package");
+        throw new ArgumentException(string.Format(CultureInfo.CurrentCulture,
+          "No package matching the parent package ({0}) was found.",
+          parent_package), "parent_package");
       }
 
       if (dependencies_.Any(
                          d => d.Parent == parent && d.Dependent == dependent)) {
-        throw new ArgumentException(string.Format("Package {0} is already " +
-          "dependent on package {1}.", dependent_package, parent_package),
-          "dependent_package");
+        throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, 
+          "Package {0} is already dependent on package {1}.", dependent_package,
+          parent_package), "dependent_package");
       }
 
       List<IPackage> to_explore = new List<IPackage>();
@@ -71,10 +73,10 @@ namespace Ringo
         }
       }
 
-      dependencies_.Add(new Depencency(dependent, parent));
+      dependencies_.Add(new Dependency(dependent, parent));
     }
 
-    public List<IPackage> Flatten() {
+    public IPackage[] Flatten() {
       // This method assumes that the dependency list is acyclic.
 
       List<IPackage> output = new List<IPackage>();
@@ -96,15 +98,15 @@ namespace Ringo
         if (packages_clone.Contains(d.Parent)) {
           output.Add(d.Parent);
           packages_clone.Remove(d.Parent);
-          dependencies_clone.Remove(d);
         }
+        dependencies_clone.Remove(d);
       }
 
       // Add the remaining packages - these have no dependencies.
       foreach (IPackage package in packages_clone) {
         output.Add(package);
       }
-      return output;
+      return output.ToArray();
     }
   }
 }

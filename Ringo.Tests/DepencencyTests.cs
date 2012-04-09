@@ -15,7 +15,7 @@ namespace Ringo.Tests
       var parent = new Mock<IPackage>();
 
       // Act
-      new Depencency(dependent, parent.Object);
+      new Dependency(dependent, parent.Object);
     }
 
     [TestMethod()]
@@ -26,7 +26,7 @@ namespace Ringo.Tests
       IPackage parent = null;
 
       // Act
-      new Depencency(dependent.Object, parent);
+      new Dependency(dependent.Object, parent);
     }
 
     [TestMethod()]
@@ -36,7 +36,7 @@ namespace Ringo.Tests
       var dependent = new Mock<IPackage>();
 
       // Act
-      new Depencency(dependent.Object, dependent.Object);
+      new Dependency(dependent.Object, dependent.Object);
     }
 
     [TestMethod()]
@@ -46,7 +46,7 @@ namespace Ringo.Tests
       var parent = new Mock<IPackage>();
 
       // Act
-      var dependency= new Depencency(dependent.Object, parent.Object);
+      var dependency= new Dependency(dependent.Object, parent.Object);
 
       // Assert
       Assert.AreEqual(dependent.Object, dependency.Dependent);
@@ -59,7 +59,7 @@ namespace Ringo.Tests
       var parent = new Mock<IPackage>();
 
       // Act
-      var dependency = new Depencency(dependent.Object, parent.Object);
+      var dependency = new Dependency(dependent.Object, parent.Object);
 
       // Assert
       Assert.AreEqual(parent.Object, dependency.Parent);

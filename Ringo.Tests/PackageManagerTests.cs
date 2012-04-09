@@ -164,14 +164,14 @@ namespace Ringo.Tests
     public void Flatten_NoPackages_EmptyList() {
       // Arrange
       PackageManager target = new PackageManager();
-      List<IPackage> actual;
+      IPackage[] actual;
 
       // Act
       actual = target.Flatten();
 
       // Assert
       Assert.IsNotNull(actual);
-      Assert.AreEqual(0, actual.Count);
+      Assert.AreEqual(0, actual.Length);
     }
 
     [TestMethod()]
@@ -184,14 +184,14 @@ namespace Ringo.Tests
         packages.Add(package.Object);
         target.Add(package.Object);
       }
-      List<IPackage> actual;
+      IPackage[] actual;
 
       // Act
       actual = target.Flatten();
 
       // Assert
       Assert.IsNotNull(actual);
-      Assert.AreEqual(10, actual.Count);
+      Assert.AreEqual(10, actual.Length);
       CollectionAssert.AreEquivalent(packages, actual);
     }
 
@@ -226,11 +226,36 @@ namespace Ringo.Tests
       target.SetDependency(package_b.Object.Name, package_a.Object.Name);
 
       // Act
-      var actual = target.Flatten();
+      var actual = new List<IPackage>(target.Flatten());
 
       // Assert
       Assert.IsTrue(actual.IndexOf(package_a.Object) <
                      actual.IndexOf(package_b.Object));
+    }
+
+    [TestMethod]
+    public void Flatten_Dependencies3_OutputInOrder() {
+      // Arrange
+      var package_a = CreateMockPackage("Package A");
+      var package_b = CreateMockPackage("Package B");
+      var package_c = CreateMockPackage("Package C");
+
+      PackageManager target = new PackageManager();
+      target.Add(package_c.Object);
+      target.Add(package_b.Object);
+      target.Add(package_a.Object);
+      target.SetDependency(package_c.Object.Name, package_b.Object.Name);
+      target.SetDependency(package_c.Object.Name, package_a.Object.Name);
+      target.SetDependency(package_b.Object.Name, package_a.Object.Name);
+
+      // Act
+      var actual = new List<IPackage>(target.Flatten());
+
+      // Assert
+      Assert.IsTrue(actual.IndexOf(package_a.Object) <
+                     actual.IndexOf(package_b.Object));
+      Assert.IsTrue(actual.IndexOf(package_b.Object) <
+                     actual.IndexOf(package_c.Object));
     }
 
     [TestMethod()]
@@ -247,7 +272,7 @@ namespace Ringo.Tests
       target.SetDependency(package_b.Object.Name, package_a.Object.Name);
 
       // Act
-      var actual = target.Flatten();
+      var actual = new List<IPackage>(target.Flatten());
 
       // Assert
       Assert.IsTrue(actual.Count == 3);
@@ -255,5 +280,7 @@ namespace Ringo.Tests
                      actual.IndexOf(package_b.Object));
       CollectionAssert.Contains(actual, package_c.Object);
     }
+
+    
   }
 }

@@ -2,12 +2,12 @@
 
 namespace Ringo
 {
-  public class Depencency : IDependency
+  public class Dependency : IDependency
   {
     public IPackage Dependent { get; private set; }
     public IPackage Parent { get; private set; }
 
-    public Depencency(IPackage dependent, IPackage parent) {
+    public Dependency(IPackage dependent, IPackage parent) {
       if (dependent == null) {
         throw new ArgumentNullException("dependent", "The dependent package " +
           "cannot be null.");
